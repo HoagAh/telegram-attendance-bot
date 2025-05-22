@@ -26,7 +26,7 @@ async def hi(update: Update, context: ContextTypes.DEFAULT_TYPE):
     now = datetime.now(pytz.timezone('Asia/Ho_Chi_Minh'))
     time = now.strftime('%H:%M:%S %d/%m/%Y')
     attendance_list.append((user, time))
-    await update.message.reply_text("🔐 Nhập mật khẩu để hiển thị link Google Drive:")
+    await update.message.reply_text(f"{user} đã điểm danh lúc {time}.\nNhập mật khẩu để truy cập Google Drive:")
     '''
     user = update.effective_user.full_name
     now = datetime.now(pytz.timezone('Asia/Ho_Chi_Minh'))
