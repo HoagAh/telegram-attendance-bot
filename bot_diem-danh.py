@@ -39,7 +39,7 @@ async def handle_password(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
     text = update.message.text
 
-    if text == CORRECT_PASSWORD:
+    if text.strip() == CORRECT_PASSWORD:
         AUTHORIZED_USERS.add(user_id)
         reply = "✅ Xác thực thành công!\n📂 Danh sách link Google Drive:\n\n"
         reply += "\n".join(GOOGLE_DRIVE_LINKS)
