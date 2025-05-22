@@ -5,7 +5,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, Con
 from datetime import datetime
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
-PASSWORD = "28122025"
+CORRECT_PASSWORD = "28122025"
 AUTHORIZED_USERS = set()
 attendance_list = []
 
