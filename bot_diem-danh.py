@@ -72,7 +72,7 @@ def search_youtube(query, max_results=3):
         videos.append((title, link))
 
     random.shuffle(videos)
-    return results[:max_results]
+    return videos[:max_results]
 
 async def timvideo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not context.args:
