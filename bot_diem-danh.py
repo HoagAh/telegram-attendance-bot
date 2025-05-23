@@ -1,6 +1,7 @@
 import os
 import pytz
 import requests
+import random
 from datetime import datetime, timedelta
 from telegram import Update
 from telegram.ext import (
@@ -56,10 +57,9 @@ def search_youtube(query, max_results=3):
         "part": "snippet",
         "q": query,
         "type": "video",
-        "order": "date",
-        "publishedAfter": (datetime.utcnow() - timedelta(days=1)).isoformat("T") + "Z",
+        "order": "relevance",  # hoặc "date"
         "key": YOUTUBE_API_KEY,
-        "maxResults": max_results
+        "maxResults": 20  # lấy nhiều hơn rồi chọn ngẫu nhiên
     }
     response = requests.get(url, params=params)
     data = response.json()
@@ -71,7 +71,8 @@ def search_youtube(query, max_results=3):
         link = f"https://www.youtube.com/watch?v={video_id}"
         results.append((title, link))
 
-    return results
+    random.shuffle(videos)
+    return results[:max_results]
 
 async def timvideo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not context.args:
