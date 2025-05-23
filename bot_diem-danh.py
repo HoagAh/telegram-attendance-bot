@@ -13,8 +13,8 @@ from telegram.ext import (
 # ======= Cấu hình =======
 BOT_TOKEN = "7886971109:AAHU2IY4Guf0VdjBNGw-wjD_Rm1UTwdJrEA"
 YOUTUBE_API_KEY = "AIzaSyD3lYq0iiYKJlN63oMaVcIsAnaQlwPfSaI"
-OPENAI_API_KEY = os.getenv("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")
-client = OpenAI(api_key=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)
+OPENAI_API_KEY = os.getenv(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)
+client = OpenAI(api_key=OPENAI_API_KEY)
 CORRECT_PASSWORD = "28122025"
 AUTHORIZED_USERS = set()
 attendance_list = []
