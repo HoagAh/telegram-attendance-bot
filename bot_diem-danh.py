@@ -13,11 +13,11 @@ from telegram.ext import (
 # ======= Cấu hình =======
 BOT_TOKEN = "7886971109:AAHU2IY4Guf0VdjBNGw-wjD_Rm1UTwdJrEA"
 YOUTUBE_API_KEY = "AIzaSyD3lYq0iiYKJlN63oMaVcIsAnaQlwPfSaI"
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = os.getenv("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")
 CORRECT_PASSWORD = "28122025"
 AUTHORIZED_USERS = set()
 attendance_list = []
-openai.api_key = OPENAI_API_KEY
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 GOOGLE_DRIVE_LINKS = [
     ("Hóa học", "https://drive.google.com/drive/folders/1R1mnaaW4SQE8RCC0s7aCNIUqziwu2Rt0?usp=drive_link"),
