@@ -8,7 +8,7 @@ from telegram.ext import (
 )
 
 # ======= Cấu hình =======
-BOT_TOKEN = "7949088784:AAG0rkhlmIVz_kn1EDreWaFB2Pd6iyoBQJU"
+BOT_TOKEN = "7886971109:AAHU2IY4Guf0VdjBNGw-wjD_Rm1UTwdJrEA"
 YOUTUBE_API_KEY = "AIzaSyD3lYq0iiYKJlN63oMaVcIsAnaQlwPfSaI"
 CORRECT_PASSWORD = "28122025"
 AUTHORIZED_USERS = set()
