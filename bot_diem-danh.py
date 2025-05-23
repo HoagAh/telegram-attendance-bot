@@ -3,6 +3,7 @@ import pytz
 import requests
 import random
 import openai
+from openai import OpenAI
 from datetime import datetime
 from telegram import Update
 from telegram.ext import (
@@ -102,12 +103,13 @@ async def chat_with_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("❗ Nhập nội dung sau lệnh /chat để hỏi ChatGPT.")
         return
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",  # Hoặc gpt-4 nếu bạn có quyền
-        messages=[{"role": "user", "content": query}]
-    )
+    client = OpenAI(api_key=OPENAI_API_KEY)
 
-    reply = response['choices'][0]['message']['content']
+response = client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[{"role": "user", "content": query}]
+)
+reply = response.choices[0].message.content
     await update.message.reply_text(reply)
 
 
