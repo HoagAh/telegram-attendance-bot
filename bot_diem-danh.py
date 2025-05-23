@@ -1,7 +1,7 @@
 import os
 import pytz
 import requests
-from datetime import datetime, time delta
+from datetime import datetime, timedelta
 from telegram import Update
 from telegram.ext import (
     ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
