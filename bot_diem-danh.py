@@ -102,7 +102,7 @@ async def chat_with_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("❗ Nhập nội dung sau lệnh /chat để hỏi ChatGPT.")
         return
 
-    client = OpenAI(api_key=OPENAI_API_KEY)
+    client = OpenAI(api_key='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')
 
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
