@@ -110,7 +110,7 @@ response = client.chat.completions.create(
     messages=[{"role": "user", "content": query}]
 )
 reply = response.choices[0].message.content
-    await update.message.reply_text(reply)
+await update.message.reply_text(reply)
 
 
 # ======= Khởi động bot =======
