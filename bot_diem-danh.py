@@ -1,7 +1,7 @@
 import os
 import pytz
 import requests
-from datetime import datetime
+from datetime import datetime, time delta
 from telegram import Update
 from telegram.ext import (
     ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
@@ -51,10 +51,13 @@ async def handle_password(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def search_youtube(query, max_results=3):
     url = "https://www.googleapis.com/youtube/v3/search"
+    today = datetime.utcnow().isoformat("T") + "Z"  # thời gian hiện tại (UTC)
     params = {
         "part": "snippet",
         "q": query,
         "type": "video",
+        "order": "date",
+        "publishedAfter": (datetime.utcnow() - timedelta(days=1)).isoformat("T") + "Z",
         "key": YOUTUBE_API_KEY,
         "maxResults": max_results
     }
