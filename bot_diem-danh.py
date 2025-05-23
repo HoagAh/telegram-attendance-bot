@@ -64,7 +64,7 @@ def search_youtube(query, max_results=3):
     response = requests.get(url, params=params)
     data = response.json()
 
-    results = []
+    videos = []
     for item in data.get("items", []):
         video_id = item["id"]["videoId"]
         title = item["snippet"]["title"]
