@@ -2,7 +2,7 @@ import os
 import pytz
 import requests
 import random
-from datetime import datetime, timedelta
+from datetime import datetime
 from telegram import Update
 from telegram.ext import (
     ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
@@ -50,7 +50,7 @@ async def handle_password(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         await update.message.reply_text("❌ Mật khẩu không đúng. Thử lại.")
 
-def search_youtube(query, max_results=3):
+def search_youtube(query, max_results=5):
     url = "https://www.googleapis.com/youtube/v3/search"
     today = datetime.utcnow().isoformat("T") + "Z"  # thời gian hiện tại (UTC)
     params = {
@@ -59,7 +59,7 @@ def search_youtube(query, max_results=3):
         "type": "video",
         "order": "relevance",  # hoặc "date"
         "key": YOUTUBE_API_KEY,
-        "maxResults": 20  # lấy nhiều hơn rồi chọn ngẫu nhiên
+        "maxResults": 50  # lấy nhiều hơn rồi chọn ngẫu nhiên
     }
     response = requests.get(url, params=params)
     data = response.json()
