@@ -2,6 +2,7 @@ import os
 import pytz
 import requests
 import random
+import openai
 from datetime import datetime
 from telegram import Update
 from telegram.ext import (
@@ -11,9 +12,11 @@ from telegram.ext import (
 # ======= Cấu hình =======
 BOT_TOKEN = "7886971109:AAHU2IY4Guf0VdjBNGw-wjD_Rm1UTwdJrEA"
 YOUTUBE_API_KEY = "AIzaSyD3lYq0iiYKJlN63oMaVcIsAnaQlwPfSaI"
+OPENAI_API_KEY = "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"
 CORRECT_PASSWORD = "28122025"
 AUTHORIZED_USERS = set()
 attendance_list = []
+openai.api_key = OPENAI_API_KEY
 
 GOOGLE_DRIVE_LINKS = [
     ("Hóa học", "https://drive.google.com/drive/folders/1R1mnaaW4SQE8RCC0s7aCNIUqziwu2Rt0?usp=drive_link"),
@@ -33,7 +36,7 @@ async def hi(update: Update, context: ContextTypes.DEFAULT_TYPE):
     now = datetime.now(tz_vietnam).strftime("%H:%M:%S - %d/%m/%Y")
     attendance = f"{user.full_name} đã điểm danh lúc {now}"
     attendance_list.append(attendance)
-    await update.message.reply_text(f"📌 {attendance}\n🔐 Vui lòng nhập mật khẩu để truy cập tài liệu\n Nhập timvideo để tìm video bạn muốn.")
+    await update.message.reply_text(f"📌 {attendance}\n🔐 Vui lòng nhập mật khẩu để truy cập tài liệu.\n Nhập /timvideo để tìm video bạn muốn.\n❗ Nhập nội dung sau lệnh /chat để hỏi ChatGPT.")
 
 # ======= Xử lý mật khẩu =======
 async def handle_password(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -92,11 +95,28 @@ async def timvideo(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await update.message.reply_text(reply, parse_mode="Markdown")
 
+# ==== 🤖 CHATGPT ====
+async def chat_with_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = " ".join(context.args)
+    if not query:
+        await update.message.reply_text("❗ Nhập nội dung sau lệnh /chat để hỏi ChatGPT.")
+        return
+
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",  # Hoặc gpt-4 nếu bạn có quyền
+        messages=[{"role": "user", "content": query}]
+    )
+
+    reply = response['choices'][0]['message']['content']
+    await update.message.reply_text(reply)
+
 
 # ======= Khởi động bot =======
 app = ApplicationBuilder().token(BOT_TOKEN).build()
+
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("hi", hi))
+app.add_handler(CommandHandler("chat", chat_with_gpt))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_password))
 app.add_handler(CommandHandler("timvideo", timvideo))
 
