@@ -69,7 +69,7 @@ def search_youtube(query, max_results=3):
         video_id = item["id"]["videoId"]
         title = item["snippet"]["title"]
         link = f"https://www.youtube.com/watch?v={video_id}"
-        results.append((title, link))
+        videos.append((title, link))
 
     random.shuffle(videos)
     return results[:max_results]
