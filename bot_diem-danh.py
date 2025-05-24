@@ -11,7 +11,7 @@ from telegram.ext import (
 )
 
 # ======= Cấu hình =======
-API_KEY = "sk-f0db80dae90f4cd58f696d96fe2b2e3a"
+API_KEY = "sk-0eda5568e3e949ecb257cbf448b1b1cd"
 client = OpenAI(
     api_key=API_KEY, base_url="https://api.deepseek.com"
 )
