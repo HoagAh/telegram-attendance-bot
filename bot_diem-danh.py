@@ -108,7 +108,7 @@ async def chat_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     try:
-        result = client.chat.completions.create(
+        response = client.chat.completions.create(
             model="deepseek-chat",
             messages=[
                 {"role": "user", "content": prompt}
