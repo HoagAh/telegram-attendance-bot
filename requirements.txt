@@ -3,5 +3,4 @@ pytz
 google-api-python-client
 google-auth
 google-auth-oauthlib
-google
-langchain_google_genai
+azure
