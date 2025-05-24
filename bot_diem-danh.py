@@ -11,9 +11,12 @@ from telegram.ext import (
 )
 
 # ======= Cấu hình =======
+API_KEY = "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"
+client = OpenAI(
+    api_key=API_KEY
+)
 BOT_TOKEN = "7886971109:AAHU2IY4Guf0VdjBNGw-wjD_Rm1UTwdJrEA"
 YOUTUBE_API_KEY = "AIzaSyD3lYq0iiYKJlN63oMaVcIsAnaQlwPfSaI"
-openai.my_api_key = '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'
 CORRECT_PASSWORD = "28122025"
 AUTHORIZED_USERS = set()
 attendance_list = []
@@ -95,21 +98,27 @@ async def timvideo(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await update.message.reply_text(reply, parse_mode="Markdown")
 
-# ==== 🤖 CHATGPT ====
-async def chat_with_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    query = " ".join(context.args)
-    if not query:
-        await update.message.reply_text("❗ Nhập nội dung sau lệnh /chat để hỏi ChatGPT.")
+
+# ==== ChatGPT =====
+async def chat_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE)
+    prompt = " ".join(context.args)
+
+    if not prompt:
+        await update.message.reply_text("❗ Nhập \gpt để trò chuyện với AI\n Ví dụ: /gpt hello?", parse_mode="Markdown")
         return
 
-    client = OpenAI(api_key='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')
-
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[{"role": "user", "content": query}]
-    )
-    reply = response.choices[0].message.content
-    await update.message.reply_text(reply)
+    try:
+        result = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7
+        )
+        reply_text = response.choices[0].message.content.strip()
+        await update.message.reply_text(f"💬 GPT:\n{reply_text}")
+    except Exception as e:
+        await update.message.reply_text(f"⚠️Không thể gọi ChatGPT: {str(e)}")
 
 
 # ======= Khởi động bot =======
@@ -117,7 +126,7 @@ app = ApplicationBuilder().token(BOT_TOKEN).build()
 
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("hi", hi))
-app.add_handler(CommandHandler("chat", chat_with_gpt))
+app.add_handler(CommandHandler("gpt", chat_with_gpt))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_password))
 app.add_handler(CommandHandler("timvideo", timvideo))
 
