@@ -11,7 +11,7 @@ from telegram.ext import (
 )
 
 # ======= Cấu hình =======
-client = genai.Client(api_key="AIzaSyD3HXTLGVnynqX1umTKOC7Dl2CSzeTdNLQ")
+#client = genai.Client(api_key="AIzaSyD3HXTLGVnynqX1umTKOC7Dl2CSzeTdNLQ")
 
 BOT_TOKEN = "7886971109:AAHU2IY4Guf0VdjBNGw-wjD_Rm1UTwdJrEA"
 YOUTUBE_API_KEY = "AIzaSyD3lYq0iiYKJlN63oMaVcIsAnaQlwPfSaI"
@@ -98,25 +98,25 @@ async def timvideo(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 # ==== ChatGPT =====
-async def chat_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    prompt = " ".join(context.args)
+#async def chat_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE):
+ #   prompt = " ".join(context.args)
 
-    if not prompt:
-        await update.message.reply_text("❗ Nhập \chat để trò chuyện với AI\n Ví dụ: \gpt hello?", parse_mode="Markdown")
-        return
+#    if not prompt:
+ #       await update.message.reply_text("❗ Nhập \chat để trò chuyện với AI\n Ví dụ: \gpt hello?", parse_mode="Markdown")
+  #      return
 
-    try:
-        response = client.models.generate_content(
-            model="gemini-2.0-flash",
-            messages=[
-                {"role": "user", "content": prompt},
-            ],
-            stream=False
-        )
-        reply_text = response.choices[0].message.content.strip()
-        await update.message.reply_text(f"💬 GPT:\n{reply_text}")
-    except Exception as e:
-        await update.message.reply_text(f"⚠️Không thể gọi AI: {str(e)}")
+   # try:
+    #    response = client.models.generate_content(
+     #       model="gemini-2.0-flash",
+      #      messages=[
+       #         {"role": "user", "content": prompt},
+        #    ],
+         #   stream=False
+        #)
+        #reply_text = response.choices[0].message.content.strip()
+        #await update.message.reply_text(f"💬 GPT:\n{reply_text}")
+    #except Exception as e:
+     #   await update.message.reply_text(f"⚠️Không thể gọi AI: {str(e)}")
 
 
 # ======= Khởi động bot =======
@@ -124,7 +124,7 @@ app = ApplicationBuilder().token(BOT_TOKEN).build()
 
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("hi", hi))
-app.add_handler(CommandHandler("gpt", chat_gpt))
+#app.add_handler(CommandHandler("gpt", chat_gpt))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_password))
 app.add_handler(CommandHandler("timvideo", timvideo))
 
