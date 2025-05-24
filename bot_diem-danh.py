@@ -11,9 +11,9 @@ from telegram.ext import (
 )
 
 # ======= Cấu hình =======
-API_KEY = "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"
+API_KEY = "sk-f0db80dae90f4cd58f696d96fe2b2e3a"
 client = OpenAI(
-    api_key=API_KEY
+    api_key=API_KEY, base url="https://api.deepseek.com")
 )
 BOT_TOKEN = "7886971109:AAHU2IY4Guf0VdjBNGw-wjD_Rm1UTwdJrEA"
 YOUTUBE_API_KEY = "AIzaSyD3lYq0iiYKJlN63oMaVcIsAnaQlwPfSaI"
@@ -109,11 +109,11 @@ async def chat_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     try:
         result = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="deepseek-chat",
             messages=[
                 {"role": "user", "content": prompt}
             ],
-            temperature=0.7
+            stream=False
         )
         reply_text = response.choices[0].message.content.strip()
         await update.message.reply_text(f"💬 GPT:\n{reply_text}")
