@@ -13,7 +13,7 @@ from telegram.ext import (
 # ======= Cấu hình =======
 API_KEY = "sk-f0db80dae90f4cd58f696d96fe2b2e3a"
 client = OpenAI(
-    api_key=API_KEY, base url="https://api.deepseek.com"
+    api_key=API_KEY, base_url="https://api.deepseek.com"
 )
 BOT_TOKEN = "7886971109:AAHU2IY4Guf0VdjBNGw-wjD_Rm1UTwdJrEA"
 YOUTUBE_API_KEY = "AIzaSyD3lYq0iiYKJlN63oMaVcIsAnaQlwPfSaI"
