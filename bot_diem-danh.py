@@ -111,7 +111,8 @@ async def chat_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE):
         response = client.chat.completions.create(
             model="deepseek-chat",
             messages=[
-                {"role": "user", "content": prompt}
+                {"role": "system", "content": "Bạn thật tuyệt vời"},
+                {"role": "user", "content": prompt},
             ],
             stream=False
         )
