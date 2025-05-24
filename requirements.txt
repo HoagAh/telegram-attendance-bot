@@ -1,6 +1,6 @@
-python-telegram-bot==20.3
+python-telegram-bot==20.7
 pytz
 google-api-python-client
 google-auth
 google-auth-oauthlib
-openai
+openai>=1.0.0
