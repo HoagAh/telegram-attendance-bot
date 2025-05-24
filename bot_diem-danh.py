@@ -2,9 +2,7 @@ import os
 import pytz
 import requests
 import random
-from azure.ai.inference import ChatCompletionsClient
-from azure.ai.inference.models import SystemMessage, UserMessage
-from azure.core.credentials import AzureKeyCredential
+from openai import OpenAI
 from datetime import datetime
 from telegram import Update
 from telegram.ext import (
@@ -18,9 +16,14 @@ BOT_TOKEN = "7886971109:AAHU2IY4Guf0VdjBNGw-wjD_Rm1UTwdJrEA"
 YOUTUBE_API_KEY = "AIzaSyD3lYq0iiYKJlN63oMaVcIsAnaQlwPfSaI"
 CORRECT_PASSWORD = "28122025"
 
+token = os.environ["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"]
 endpoint = "https://models.github.ai/inference"
 model = "openai/gpt-4.1"
-token = os.environ["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"]
+
+client = OpenAI(
+    base_url=endpoint,
+    api_key=token,
+)
 
 AUTHORIZED_USERS = set()
 attendance_list = []
@@ -104,12 +107,6 @@ async def timvideo(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 # ==== ChatGPT =====
-
-client = ChatCompletionsClient(
-    endpoint=endpoint,
-    credential=AzureKeyCredential(token),
-)
-
 async def chat_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE):
     prompt = " ".join(context.args)
 
@@ -118,15 +115,22 @@ async def chat_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     try:
-        response = client.complete(
+        response = client.chat.completions.create(
             messages=[
-                SystemMessage(""),
-                UserMessage("What is the capital of France?"),
+                {
+                    "role": "system",
+                    "content": "You are a helpful assistant.",
+                },
+                {
+                    "role": "user",
+                    "content": "What is the capital of France?",
+                }
             ],
-            temperature=1,
-            top_p=1,
+            temperature=1.0,
+            top_p=1.0,
             model=model
         )
+        
         print(response.choices[0].message.content)
     except Exception as e:
         await update.message.reply_text(f"⚠️Không thể gọi AI: {str(e)}")
