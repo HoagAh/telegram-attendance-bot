@@ -126,7 +126,7 @@ app = ApplicationBuilder().token(BOT_TOKEN).build()
 
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("hi", hi))
-app.add_handler(CommandHandler("gpt", chat_with_gpt))
+app.add_handler(CommandHandler("gpt", chat_gpt))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_password))
 app.add_handler(CommandHandler("timvideo", timvideo))
 
