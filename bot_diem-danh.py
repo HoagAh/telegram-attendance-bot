@@ -2,8 +2,9 @@ import os
 import pytz
 import requests
 import random
-import logging
-from langchain_google_genai import GoogleGenerativeAI
+from azure.ai.inference import ChatCompletionsClient
+from azure.ai.inference.models import SystemMessage, UserMessage
+from azure.core.credentials import AzureKeyCredential
 from datetime import datetime
 from telegram import Update
 from telegram.ext import (
@@ -16,6 +17,11 @@ from telegram.ext import (
 BOT_TOKEN = "7886971109:AAHU2IY4Guf0VdjBNGw-wjD_Rm1UTwdJrEA"
 YOUTUBE_API_KEY = "AIzaSyD3lYq0iiYKJlN63oMaVcIsAnaQlwPfSaI"
 CORRECT_PASSWORD = "28122025"
+
+endpoint = "https://models.github.ai/inference"
+model = "openai/gpt-4.1"
+token = os.environ["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"]
+
 AUTHORIZED_USERS = set()
 attendance_list = []
 
@@ -98,25 +104,32 @@ async def timvideo(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 # ==== ChatGPT =====
-#async def chat_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE):
- #   prompt = " ".join(context.args)
 
-#    if not prompt:
- #       await update.message.reply_text("❗ Nhập \chat để trò chuyện với AI\n Ví dụ: \gpt hello?", parse_mode="Markdown")
-  #      return
+client = ChatCompletionsClient(
+    endpoint=endpoint,
+    credential=AzureKeyCredential(token),
+)
 
-   # try:
-    #    response = client.models.generate_content(
-     #       model="gemini-2.0-flash",
-      #      messages=[
-       #         {"role": "user", "content": prompt},
-        #    ],
-         #   stream=False
-        #)
-        #reply_text = response.choices[0].message.content.strip()
-        #await update.message.reply_text(f"💬 GPT:\n{reply_text}")
-    #except Exception as e:
-     #   await update.message.reply_text(f"⚠️Không thể gọi AI: {str(e)}")
+async def chat_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    prompt = " ".join(context.args)
+
+    if not prompt:
+        await update.message.reply_text("❗ Nhập \chat để trò chuyện với AI\n Ví dụ: \gpt hello?", parse_mode="Markdown")
+        return
+
+    try:
+        response = client.complete(
+            messages=[
+                SystemMessage(""),
+                UserMessage("What is the capital of France?"),
+            ],
+            temperature=1,
+            top_p=1,
+            model=model
+        )
+        print(response.choices[0].message.content)
+    except Exception as e:
+        await update.message.reply_text(f"⚠️Không thể gọi AI: {str(e)}")
 
 
 # ======= Khởi động bot =======
@@ -124,7 +137,7 @@ app = ApplicationBuilder().token(BOT_TOKEN).build()
 
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("hi", hi))
-#app.add_handler(CommandHandler("gpt", chat_gpt))
+app.add_handler(CommandHandler("gpt", chat_gpt))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_password))
 app.add_handler(CommandHandler("timvideo", timvideo))
 
