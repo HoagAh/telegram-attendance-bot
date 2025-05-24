@@ -2,8 +2,7 @@ import os
 import pytz
 import requests
 import random
-import openai
-from openai import OpenAI
+from google import genai
 from datetime import datetime
 from telegram import Update
 from telegram.ext import (
@@ -11,10 +10,8 @@ from telegram.ext import (
 )
 
 # ======= Cấu hình =======
-API_KEY = "sk-0eda5568e3e949ecb257cbf448b1b1cd"
-client = OpenAI(
-    api_key=API_KEY, base_url="https://api.deepseek.com"
-)
+client = genai.Client(api_key="AIzaSyD3HXTLGVnynqX1umTKOC7Dl2CSzeTdNLQ")
+
 BOT_TOKEN = "7886971109:AAHU2IY4Guf0VdjBNGw-wjD_Rm1UTwdJrEA"
 YOUTUBE_API_KEY = "AIzaSyD3lYq0iiYKJlN63oMaVcIsAnaQlwPfSaI"
 CORRECT_PASSWORD = "28122025"
@@ -104,14 +101,13 @@ async def chat_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE):
     prompt = " ".join(context.args)
 
     if not prompt:
-        await update.message.reply_text("❗ Nhập \gpt để trò chuyện với AI\n Ví dụ: \gpt hello?", parse_mode="Markdown")
+        await update.message.reply_text("❗ Nhập \chat để trò chuyện với AI\n Ví dụ: \gpt hello?", parse_mode="Markdown")
         return
 
     try:
-        response = client.chat.completions.create(
-            model="deepseek-chat",
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
             messages=[
-                {"role": "system", "content": "Bạn thật tuyệt vời"},
                 {"role": "user", "content": prompt},
             ],
             stream=False
@@ -119,7 +115,7 @@ async def chat_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply_text = response.choices[0].message.content.strip()
         await update.message.reply_text(f"💬 GPT:\n{reply_text}")
     except Exception as e:
-        await update.message.reply_text(f"⚠️Không thể gọi ChatGPT: {str(e)}")
+        await update.message.reply_text(f"⚠️Không thể gọi AI: {str(e)}")
 
 
 # ======= Khởi động bot =======
