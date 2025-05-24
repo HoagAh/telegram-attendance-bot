@@ -104,7 +104,7 @@ async def chat_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE):
     prompt = " ".join(context.args)
 
     if not prompt:
-        await update.message.reply_text("❗ Nhập \gpt để trò chuyện với AI\n Ví dụ: /gpt hello?", parse_mode="Markdown")
+        await update.message.reply_text("❗ Nhập \gpt để trò chuyện với AI\n Ví dụ: \gpt hello?", parse_mode="Markdown")
         return
 
     try:
