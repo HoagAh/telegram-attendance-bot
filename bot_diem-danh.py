@@ -100,7 +100,7 @@ async def timvideo(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 # ==== ChatGPT =====
-async def chat_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE)
+async def chat_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE):
     prompt = " ".join(context.args)
 
     if not prompt:
