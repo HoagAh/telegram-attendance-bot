@@ -2,7 +2,9 @@ import os
 import pytz
 import requests
 import random
+import logging
 from google import genai
+from google.genai import types
 from datetime import datetime
 from telegram import Update
 from telegram.ext import (
