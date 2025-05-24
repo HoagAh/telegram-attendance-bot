@@ -10,13 +10,12 @@ from telegram.ext import (
 )
 
 # ======= Cấu hình =======
-#client = genai.Client(api_key="AIzaSyD3HXTLGVnynqX1umTKOC7Dl2CSzeTdNLQ")
 
 BOT_TOKEN = "7886971109:AAHU2IY4Guf0VdjBNGw-wjD_Rm1UTwdJrEA"
 YOUTUBE_API_KEY = "AIzaSyD3lYq0iiYKJlN63oMaVcIsAnaQlwPfSaI"
 CORRECT_PASSWORD = "28122025"
 
-token = os.environ["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"]
+token = os.environ["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"]
 endpoint = "https://models.github.ai/inference"
 model = "openai/gpt-4.1"
 
